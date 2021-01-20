@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>HTML L2 Hands On</title>
+<style>
+    #container{
+        text-align: center;
+        margin: -50px 20% 0 20%;
+    }
+    #SVGs{
+        width:210px;
+        height:210px;
+        margin: 20px 0 0 265px;
+        position:relative;
+        }
+    .sec1,.sec2{
+        width:190px;
+        height:190px;
+        position:absolute;
+		padding-left: 42px;
+		padding-top:50px;
+    }
+    .sec1{
+        z-index:10;
+    }
+	p {
+		text-align: center;
+		line-height: 10px;
+		position: sticky;
+	}
+</style>
+
+<script>
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+    function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+    }
+</script>
+
+</head>
+
+<body>
+<section id ="container">
+    <section id="SVGs">
+        <section class="sec2">
+        <svg width="200" height="200">
+            <circle id="abc" cx="105" cy="100" r="75" fill="yellow"></circle>
+        </svg>
+        </section>
+        
+        <section id="sec1"class="sec1" ondrop="drop(event)" ondragover="allowDrop(event)"></section>
+       <br/>
+    </section>
+	<section id="SVGs">
+        <section class="sec2">
+            <svg width="200" height="200">
+                <circle id="abc" cx="105" cy="100" r="75" fill="green"></circle>
+            </svg>
+        </section>
+        
+        <section id="sec1"class="sec1" ondrop="drop(event)" ondragover="allowDrop(event)"></section>
+    </section>
+    <section>
+        <img id="drg1" alt="HP Logo" src="https://www.flaticon.com/svg/static/icons/svg/284/284469.svg" draggable="true" ondragstart="drag(event)" width="100" height="100" style="padding-left:12px; padding-top:50px;"/>
+    </section>
+</section>
+<p id="err"></p>
+<br><br>
+<div>
+	<center>
+		<button id = "btnPosition" onclick = "myLocation();">Get Location</button>
+	</center>
+</div>
+<p id="result"></p>
+</body>
+
+<script>
+    var x = document.getElementById("result");
+    function myLocation() {
+  	    if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(showPosition);
+        } else { 
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+    
+    function showPosition(position) {
+        localStorage.latitude = position.coords.latitude;
+        localStorage.longitude = position.coords.longitude;
+        x.innerHTML="Latitude : " + localStorage.latitude +"<br><br>Longitude : "+ localStorage.longitude;    
+    }
+</script>
+</html>
